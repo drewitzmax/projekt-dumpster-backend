@@ -1,0 +1,1 @@
+CREATE SCHEMA skip_diving
