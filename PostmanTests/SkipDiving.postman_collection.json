@@ -7,6 +7,20 @@
 	"item": [
 		{
 			"name": "Signup User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b1ff631-fe41-4424-8bca-5da9bd3f6ea1",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -27,6 +41,47 @@
 					"port": "8080",
 					"path": [
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup Provider",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34747fd5-a55a-4da3-b320-474bb1e7a2a1",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Restaurant Nr1\",\r\n    \"address\":\"TestingStreet 12\\n1030 Wien\",\r\n    \"phoneNumber\":\"0151-06845756\",\r\n    \"email\":\"Restaurantnr1@Test.at\",\r\n    \"password\":\"test\",\r\n    \"homepageUrl\":\"www.nr1.at\",\r\n    \"photos\":[\r\n        \"url1\",\r\n        \"url2\",\r\n        \"url3\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/provider",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"provider"
 					]
 				}
 			},
