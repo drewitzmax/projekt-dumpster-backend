@@ -1,0 +1,59 @@
+swagger: "2.0"
+info:
+  description: "This is an API for use with our Skip-Diving-App"
+  version: "1.0.0"
+  title: "Skip-Diving"
+  contact:
+    email: "drewitz.max@googlemail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+tags:
+- name: "User"
+  description: "Actions on the Userbase"
+schemes:
+- "http"
+paths:
+  /user:
+    post:
+      tags:
+      - "User"
+      summary: "Create a new UserAccount"
+      description: ""
+      operationId: "signUp"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be added to the Database"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "User has been created"
+        "409":
+          description: "Conflict with existing Entry"
+
+definitions:
+  User:
+    type: object
+    properties:
+      userId:
+        type: integer
+      name:
+        type: string
+      lastname:
+        type: string
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required: 
+    - username
+    - email
+    - password
