@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
+
 @RestController
 public class UserController {
     @Autowired
@@ -16,6 +18,7 @@ public class UserController {
 
     @PostMapping(path="/user", consumes = "application/json")
     public ResponseEntity<String> signUp(@RequestBody User user){
+        user.setId(BigInteger.ZERO);
         try{
             if(userRepo.findByEmail(user.getEmail()) != null)
                 return new ResponseEntity<>("Email already in use", HttpStatus.CONFLICT);
