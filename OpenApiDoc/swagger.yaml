@@ -12,6 +12,8 @@ host: "localhost:8080"
 tags:
 - name: "User"
   description: "Actions on the Userbase"
+- name: "Provider"
+  description: "Actions on the Provider table"
 schemes:
 - "http"
 paths:
@@ -20,7 +22,6 @@ paths:
       tags:
       - "User"
       summary: "Create a new UserAccount"
-      description: ""
       operationId: "signUp"
       consumes:
       - "application/json"
@@ -36,6 +37,26 @@ paths:
           description: "User has been created"
         "409":
           description: "Conflict with existing Entry"
+  /provider:
+    post:
+      tags:
+      - "Provider"
+      summary: "Create new Account for provider"
+      operationId: "signUpProvider"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Provider Object to be persisted in Database"
+        required: true
+        schema: 
+          $ref: "#/definitions/Provider"
+      responses:
+        "201":
+          description: "Provider Account has been created"
+        "400":
+          description: "Data violating requirements"
 
 definitions:
   User:
@@ -55,5 +76,32 @@ definitions:
         type: string
     required: 
     - username
+    - email
+    - password
+  Provider:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      address:
+        type: string
+      phoneNumber:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      homepageUrl:
+        type: string
+      photos:
+        type: array
+        items:
+          type: string
+    required: 
+    - name
+    - address
+    - phoneNumber
     - email
     - password
