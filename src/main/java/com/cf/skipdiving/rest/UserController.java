@@ -15,12 +15,16 @@ public class UserController {
     private UserRepository userRepo;
 
     @PostMapping(path="/user", consumes = "application/json")
-    public ResponseEntity<Void> signUp(@RequestBody User user){
+    public ResponseEntity<String> signUp(@RequestBody User user){
         try{
+            if(userRepo.findByEmail(user.getEmail()) != null)
+                return new ResponseEntity<>("Email already in use", HttpStatus.CONFLICT);
+            if(userRepo.findByUsername(user.getUsername()) != null)
+                return new ResponseEntity<>("Username already taken", HttpStatus.CONFLICT);
             userRepo.save(user);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("User successfully created", HttpStatus.CREATED);
         } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
         }
     }
 }

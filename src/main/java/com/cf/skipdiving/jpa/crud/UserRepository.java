@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.math.BigInteger;
 
 public interface UserRepository extends CrudRepository<User, BigInteger> {
-
+    public User findByUsername(String username);
+    public User findByEmail(String email);
 }
