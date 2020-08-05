@@ -57,6 +57,20 @@ paths:
           description: "Provider Account has been created"
         "400":
           description: "Data violating requirements"
+    get:
+      tags:
+      - "Provider"
+      summary: "Get all Providers in DB"
+      operationId: "getAllProviders"
+      responses:
+        "200":
+          description: "Successfull request, providers have been found"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Provider'
+        "404":
+          description: "Successfull request, no providers found"
 
 definitions:
   User:

@@ -86,6 +86,38 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "All Providers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "006aa244-2342-47a5-95e2-fa1d9f715170",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/provider",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"provider"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
