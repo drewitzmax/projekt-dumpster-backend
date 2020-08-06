@@ -34,6 +34,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests().antMatchers(HttpMethod.GET).authenticated()
                     .antMatchers(HttpMethod.POST, "/offer").hasAuthority("provider")
+                    .antMatchers(HttpMethod.POST, "/offer/claim/{id}").hasAuthority("user")
                 .and()
                     .httpBasic()
                 .and()
