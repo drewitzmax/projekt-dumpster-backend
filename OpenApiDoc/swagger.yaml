@@ -14,6 +14,8 @@ tags:
   description: "Actions on the Userbase"
 - name: "Provider"
   description: "Actions on the Provider table"
+- name: "Login"
+  description: "Login for all User-Groups"
 schemes:
 - "http"
 paths:
@@ -71,6 +73,19 @@ paths:
               $ref: '#/definitions/Provider'
         "404":
           description: "Successfull request, no providers found"
+  /login:
+    get:
+      tags:
+      - Login
+      summary: "Validate login Information"
+      operationId: "login"
+      responses:
+        "200":
+          description: "Successfully validated login information"
+          schema: 
+            $ref: '#/definitions/Role'
+        "401":
+          description: "Unauthorized: No Account found with this Credentials"
 
 definitions:
   User:
@@ -119,3 +134,6 @@ definitions:
     - phoneNumber
     - email
     - password
+  Role:
+    type: string
+    enum: ['[user]','[admin]', '[provider]']
