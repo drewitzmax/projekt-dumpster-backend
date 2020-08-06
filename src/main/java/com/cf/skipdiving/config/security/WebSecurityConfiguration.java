@@ -19,15 +19,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT username, password, enabled FROM skip_diving.sd_user WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, authority FROM skip_diving.sd_user WHERE username=?")
-                .passwordEncoder(new BCryptPasswordEncoder());
+                    .usersByUsernameQuery("SELECT username, password, enabled FROM skip_diving.sd_user WHERE username=?")
+                    .authoritiesByUsernameQuery("SELECT username, authority FROM skip_diving.sd_user WHERE username=?")
+                    .passwordEncoder(new BCryptPasswordEncoder()).
+                and()
+                    .jdbcAuthentication().dataSource(dataSource)
+                    .usersByUsernameQuery("SELECT email, password, enabled FROM skip_diving.provider WHERE email=?")
+                    .authoritiesByUsernameQuery("SELECT email, authority FROM skip_diving.provider WHERE email=?")
+                    .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-                .authorizeRequests().antMatchers(HttpMethod.GET).hasAuthority("user")
+                .authorizeRequests().antMatchers(HttpMethod.GET).authenticated()
                 .and()
                     .httpBasic()
                 .and()
