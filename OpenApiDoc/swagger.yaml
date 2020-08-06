@@ -118,6 +118,17 @@ paths:
       responses:
         201:
           description: "Offer successfully Created"
+    get:
+      tags:
+      - Offer
+      summary: "Get all Offers"
+      responses:
+        "200":
+          description: "Successfull Request"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Offer'
 
 definitions:
   User:
