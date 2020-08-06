@@ -4,6 +4,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="sd_user", schema = "skip_diving")
@@ -24,6 +26,9 @@ public class User {
     public String username;
     @Column(name="password")
     public String password;
+
+    @ManyToMany(mappedBy = "claimers")
+    public List<Offer> orderHistory = new ArrayList<>();
 
     public BigInteger getId() {
         return id;

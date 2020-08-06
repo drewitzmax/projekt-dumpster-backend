@@ -1,11 +1,15 @@
 package com.cf.skipdiving.jpa.entity;
 
 import com.cf.skipdiving.exception.ActionNotExecutedException;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,6 +38,9 @@ public class Provider {
     @CollectionTable(name="provider_image",schema = "skip_diving", joinColumns=@JoinColumn(name="provider_id"))
     @Column(name="photo_url", nullable = false)
     private Set<String> photos = new HashSet<>();
+
+    @OneToMany(mappedBy = "provider")
+    private List<Offer> offers = new ArrayList<>();
 
     public BigInteger getId() {
         return id;
