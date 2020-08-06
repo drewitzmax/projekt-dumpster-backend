@@ -5,20 +5,19 @@ import com.cf.skipdiving.jpa.entity.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class ProviderController {
     @Autowired
     private ProviderRepository providerRepo;
 
+    //Provider Mapping
     @PostMapping(path="/provider", consumes = "application/json")
     public ResponseEntity<String> signUp(@RequestBody Provider provider){
         provider.setId(BigInteger.ZERO);
@@ -40,9 +39,20 @@ public class ProviderController {
         }
     }
 
-    private List<Provider> convertIterableToList(Iterable<Provider> iterable){
+    //Category Mapping
+    @GetMapping(path = "/provider/category/{category}")
+    public ResponseEntity<List<Provider>>getAllCategory(@PathVariable String category){
+        List<Provider> providers = providerRepo.findAllByCategory(category);
+        if(providers.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(providers, HttpStatus.OK);
+        }
+    }
+
+    private List<Provider> convertIterableToList(Iterable<Provider> iterable) {
         List<Provider> list = new ArrayList<>();
-        for(Provider provider: iterable){
+        for (Provider provider : iterable) {
             list.add(provider);
         }
         return list;

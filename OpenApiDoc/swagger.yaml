@@ -17,23 +17,23 @@ tags:
 - name: "Login"
   description: "Login for all User-Groups"
 schemes:
-- "http"
+  - "http"
 paths:
   /user:
     post:
       tags:
-      - "User"
+        - "User"
       summary: "Create a new UserAccount"
       operationId: "signUp"
       consumes:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "User object that needs to be added to the Database"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be added to the Database"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
       responses:
         "201":
           description: "User has been created"
@@ -42,18 +42,18 @@ paths:
   /provider:
     post:
       tags:
-      - "Provider"
+        - "Provider"
       summary: "Create new Account for provider"
       operationId: "signUpProvider"
       consumes:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Provider Object to be persisted in Database"
-        required: true
-        schema: 
-          $ref: "#/definitions/Provider"
+        - in: "body"
+          name: "body"
+          description: "Provider Object to be persisted in Database"
+          required: true
+          schema:
+            $ref: "#/definitions/Provider"
       responses:
         "201":
           description: "Provider Account has been created"
@@ -61,7 +61,7 @@ paths:
           description: "Data violating requirements"
     get:
       tags:
-      - "Provider"
+        - "Provider"
       summary: "Get all Providers in DB"
       operationId: "getAllProviders"
       responses:
@@ -73,6 +73,20 @@ paths:
               $ref: '#/definitions/Provider'
         "404":
           description: "Successfull request, no providers found"
+  /provider/category:
+    get:
+      tags:
+        - "Provider"
+      summary: "Get all Providers that match the category"
+      responses:
+        200:
+          description: "Successfull request, category found"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Provider'
+        404:
+          description: "Successfull request, no category found"
   /login:
     get:
       tags:
@@ -103,10 +117,10 @@ definitions:
         type: string
       password:
         type: string
-    required: 
-    - username
-    - email
-    - password
+    required:
+      - username
+      - email
+      - password
   Provider:
     type: object
     properties:
@@ -123,6 +137,8 @@ definitions:
       password:
         type: string
       homepageUrl:
+        type: string
+      category:
         type: string
       photos:
         type: array

@@ -15,23 +15,25 @@ public class Provider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="provider_id", nullable = false, unique = true, updatable = false)
-    public BigInteger id;
+    private BigInteger id;
     @Column(name="name")
-    public String name;
+    private String name;
     @Column(name="address")
-    public String address;
+    private String address;
     @Column(name="phone_number")
-    public String phoneNumber;
+    private String phoneNumber;
     @Column(name="email")
-    public String email;
+    private String email;
     @Column(name="password")
-    public String password;
+    private String password;
     @Column(name="homepage")
-    public String homepageUrl;
+    private String homepageUrl;
+    @Column(name = "category")
+    private String category;
     @ElementCollection
     @CollectionTable(name="provider_image",schema = "skip_diving", joinColumns=@JoinColumn(name="provider_id"))
     @Column(name="photo_url", nullable = false)
-    public Set<String> photos = new HashSet<>();
+    private Set<String> photos = new HashSet<>();
 
     public BigInteger getId() {
         return id;
@@ -95,6 +97,14 @@ public class Provider {
 
     public void setPhotos(Set<String> photos) {
         this.photos = photos;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public void addPhotoUrl(String url){
