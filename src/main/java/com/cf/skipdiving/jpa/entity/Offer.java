@@ -1,7 +1,10 @@
 package com.cf.skipdiving.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name="offer", schema = "skip_diving")
@@ -24,7 +27,8 @@ public class Offer {
     private Provider provider;
     @ManyToMany
     @JoinTable(name="offer_user", schema = "skip_diving", joinColumns = @JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
-    private List<User> claimers;
+    @JsonIgnoreProperties("orderHistory")
+    private List<User> claimers = new ArrayList<>();
 
     public BigInteger getId() {
         return id;
@@ -80,5 +84,19 @@ public class Offer {
 
     public void setClaimers(List<User> claimers) {
         this.claimers = claimers;
+    }
+
+    public boolean claim(User claimer){
+        if(isAvailable()){
+            claimers.add(claimer);
+            amountRemaining -= 1;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isAvailable(){
+        return amountRemaining > 0;
     }
 }

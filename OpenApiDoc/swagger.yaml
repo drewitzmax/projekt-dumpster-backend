@@ -16,6 +16,8 @@ tags:
   description: "Actions on the Provider table"
 - name: "Login"
   description: "Login for all User-Groups"
+- name: "Offer"
+  description: "Actions regarding Offers"
 schemes:
   - "http"
 paths:
@@ -129,7 +131,26 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Offer'
-
+  /offer/claim/{id}:
+    post:
+      tags:
+      - Offer
+      summary: "Claim offer"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id of the offer you want to claim"
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: "Successfully Claimed"
+          schema:
+            type: string
+        "400":
+          description: "Offer couldn't be claimed"
+          schema:
+            type: string
 definitions:
   User:
     type: object
