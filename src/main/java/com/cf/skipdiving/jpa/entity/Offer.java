@@ -10,7 +10,7 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="offer_id")
     private BigInteger id;
-    @Column(name="tile")
+    @Column(name="title")
     private String title;
     @Column(name="description")
     private String describtion;
@@ -20,10 +20,10 @@ public class Offer {
     private int amountRemaining;
 
     @ManyToOne()
-    @JoinTable(name="provider_offer", joinColumns=@JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="provider_id") )
+    @JoinTable(name="provider_offer", schema = "skip_diving",joinColumns=@JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="provider_id") )
     private Provider provider;
     @ManyToMany
-    @JoinTable(name="offer_user", joinColumns = @JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
+    @JoinTable(name="offer_user", schema = "skip_diving", joinColumns = @JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
     private List<User> claimers;
 
     public BigInteger getId() {
