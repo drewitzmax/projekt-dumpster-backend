@@ -10,10 +10,12 @@ info:
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "localhost:8080"
 tags:
-  - name: "User"
-    description: "Actions on the Userbase"
-  - name: "Provider"
-    description: "Actions on the Provider table"
+- name: "User"
+  description: "Actions on the Userbase"
+- name: "Provider"
+  description: "Actions on the Provider table"
+- name: "Login"
+  description: "Login for all User-Groups"
 schemes:
   - "http"
 paths:
@@ -85,6 +87,19 @@ paths:
               $ref: '#/definitions/Provider'
         404:
           description: "Successfull request, no category found"
+  /login:
+    get:
+      tags:
+      - Login
+      summary: "Validate login Information"
+      operationId: "login"
+      responses:
+        "200":
+          description: "Successfully validated login information"
+          schema: 
+            $ref: '#/definitions/Role'
+        "401":
+          description: "Unauthorized: No Account found with this Credentials"
 
 definitions:
   User:
@@ -129,9 +144,12 @@ definitions:
         type: array
         items:
           type: string
-    required:
-      - name
-      - address
-      - phoneNumber
-      - email
-      - password
+    required: 
+    - name
+    - address
+    - phoneNumber
+    - email
+    - password
+  Role:
+    type: string
+    enum: ['[user]','[admin]', '[provider]']
