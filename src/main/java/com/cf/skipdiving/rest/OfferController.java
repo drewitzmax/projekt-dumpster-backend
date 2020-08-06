@@ -25,8 +25,12 @@ public class OfferController {
     @PostMapping(path="/offer", consumes = "application/json")
     public ResponseEntity<String> createOffer(@RequestBody Offer offer){
         offer.setId(BigInteger.ZERO);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         offer.setProvider(providerRepo.findByEmail(auth.getName()));
+
+        offer.setAmountRemaining(offer.getAmountRemaining());
+        
         try{
             offerRepo.save(offer);
             return new ResponseEntity<>("Offer successfully created", HttpStatus.CREATED);
