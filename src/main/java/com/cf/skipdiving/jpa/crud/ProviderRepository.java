@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ProviderRepository extends CrudRepository<Provider, BigInteger> {
     public List<Provider> findAllByCategory(String category);
+    public Provider findByEmail(String email);
 }

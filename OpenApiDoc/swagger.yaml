@@ -100,6 +100,24 @@ paths:
             $ref: '#/definitions/Role'
         "401":
           description: "Unauthorized: No Account found with this Credentials"
+  /offer:
+    post:
+      tags:
+      - Offer
+      summary: "Create a new Offer"
+      operationId: "createOffer"
+      consumes:
+      - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Offer object that you are about to create"
+        required: true
+        schema:
+          $ref: '#/definitions/Offer'
+      responses:
+        201:
+          description: "Offer successfully Created"
 
 definitions:
   User:
@@ -150,6 +168,23 @@ definitions:
     - phoneNumber
     - email
     - password
+  Offer:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      description:
+        type: string
+      amountOffered:
+        type: integer
+      amountRemaining:
+        type: integer
+    required:
+    - title
+    - description
+    - amountOffered
   Role:
     type: string
     enum: ['[user]','[admin]', '[provider]']

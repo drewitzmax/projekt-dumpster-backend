@@ -33,6 +33,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests().antMatchers(HttpMethod.GET).authenticated()
+                    .antMatchers(HttpMethod.POST, "/offer").hasAuthority("provider")
                 .and()
                     .httpBasic()
                 .and()
