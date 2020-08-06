@@ -1,11 +1,15 @@
 package com.cf.skipdiving.jpa.entity;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
 @Table(name="sd_user", schema = "skip_diving")
 public class User {
+    private static BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
@@ -66,6 +70,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PASSWORD_ENCODER.encode(password);
     }
 }

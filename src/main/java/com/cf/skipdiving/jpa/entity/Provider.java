@@ -1,17 +1,17 @@
 package com.cf.skipdiving.jpa.entity;
 
 import com.cf.skipdiving.exception.ActionNotExecutedException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name="provider", schema = "skip_diving")
 public class Provider {
+    private static BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="provider_id", nullable = false, unique = true, updatable = false)
@@ -78,7 +78,7 @@ public class Provider {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PASSWORD_ENCODER.encode(password);
     }
 
     public String getHomepageUrl() {
