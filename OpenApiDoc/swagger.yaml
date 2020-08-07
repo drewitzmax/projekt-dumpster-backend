@@ -80,6 +80,11 @@ paths:
       tags:
         - "Provider"
       summary: "Get all Providers that match the category"
+      parameters:
+      - in: query
+        name: category
+        description: "category you want to filter for"
+        type: string
       responses:
         200:
           description: "Successfull request, category found"
