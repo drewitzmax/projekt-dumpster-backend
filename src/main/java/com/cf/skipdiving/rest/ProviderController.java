@@ -40,8 +40,8 @@ public class ProviderController {
     }
 
     //Category Mapping
-    @GetMapping(path = "/provider/category/{category}")
-    public ResponseEntity<List<Provider>>getAllCategory(@PathVariable String category){
+    @GetMapping(path = "/provider/category")
+    public ResponseEntity<List<Provider>>getAllCategory(@RequestParam String category){
         List<Provider> providers = providerRepo.findAllByCategory(category);
         if(providers.isEmpty()){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
