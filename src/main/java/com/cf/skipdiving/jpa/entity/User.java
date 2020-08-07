@@ -27,7 +27,7 @@ public class User {
     @Column(name="password")
     public String password;
 
-    @ManyToMany(mappedBy = "claimers")
+    @ManyToMany(mappedBy = "claimers", cascade = CascadeType.REMOVE)
     public List<Offer> orderHistory = new ArrayList<>();
 
     public BigInteger getId() {
