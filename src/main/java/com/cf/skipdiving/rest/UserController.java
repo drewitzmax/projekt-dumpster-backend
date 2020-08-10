@@ -34,10 +34,13 @@ public class UserController {
     @DeleteMapping(path="/user")
     public ResponseEntity<String> deleteAccount(){
         try {
-            userRepo.delete(getCurrentUser());
+            User current = getCurrentUser();
+            current.deleteAssociations();
+            userRepo.delete(current);
             return new ResponseEntity<>("Account successfully delteted", HttpStatus.OK);
         } catch (Exception e){
-            return new ResponseEntity<>("Account couln't be deleted",HttpStatus.valueOf(500));
+            e.printStackTrace();
+            return new ResponseEntity<>("Account couln't be deleted\n"+e.toString(),HttpStatus.valueOf(500));
         }
     }
 

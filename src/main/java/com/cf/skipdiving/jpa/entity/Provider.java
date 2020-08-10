@@ -39,7 +39,7 @@ public class Provider {
     @Column(name="photo_url", nullable = false)
     private Set<String> photos = new HashSet<>();
 
-    @OneToMany(mappedBy = "provider")
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
     private List<Offer> offers = new ArrayList<>();
 
     public BigInteger getId() {
@@ -114,6 +114,14 @@ public class Provider {
         this.category = category;
     }
 
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
+    }
+
     public void addPhotoUrl(String url){
         if(!photos.contains(url)) {
             photos.add(url);
@@ -127,6 +135,12 @@ public class Provider {
             photos.remove(url);
         } else {
             throw new ActionNotExecutedException("Given Url is not in Set");
+        }
+    }
+
+    public void deleteAssociations(){
+        for(Offer offer: offers){
+            offer.removeAllClaimers();
         }
     }
 }

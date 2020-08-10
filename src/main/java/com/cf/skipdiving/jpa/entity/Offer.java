@@ -86,17 +86,31 @@ public class Offer {
         this.claimers = claimers;
     }
 
-    public boolean claim(User claimer){
-        if(isAvailable()){
-            claimers.add(claimer);
-            amountRemaining -= 1;
-            return true;
-        } else {
-            return false;
-        }
+    public void claim(User claimer) {
+        claimers.add(claimer);
+        claimer.getOrderHistory().add(this);
+        amountRemaining -= 1;
     }
 
     public boolean isAvailable(){
         return amountRemaining > 0;
     }
+
+    public void deleteAssociations(){
+        removeProvider();
+        removeAllClaimers();
+    }
+
+    private void removeProvider(){
+        provider.getOffers().remove(this);
+        provider = null;
+    }
+
+    protected void removeAllClaimers(){
+        for(User claimer: claimers){
+            claimer.getOrderHistory().remove(this);
+            claimers.remove(claimer);
+        }
+    }
+
 }
