@@ -43,6 +43,14 @@ paths:
           description: "User has been created"
         "409":
           description: "Conflict with existing Entry"
+    delete:
+      tags:
+        - "User"
+      summary: "Delete own Account"
+      operationId: "deleteUser"
+      responses:
+        "200":
+          description: "Account has been deleted"
   /provider:
     post:
       tags:

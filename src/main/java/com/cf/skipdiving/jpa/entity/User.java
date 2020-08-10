@@ -1,11 +1,15 @@
 package com.cf.skipdiving.jpa.entity;
 
+import com.cf.skipdiving.jpa.crud.OfferRepository;
+import com.cf.skipdiving.jpa.crud.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="sd_user", schema = "skip_diving")
@@ -27,8 +31,8 @@ public class User {
     @Column(name="password")
     public String password;
 
-    @ManyToMany(mappedBy = "claimers")
-    public List<Offer> orderHistory = new ArrayList<>();
+    @ManyToMany(mappedBy = "claimers", cascade = CascadeType.REFRESH)
+    public Set<Offer> orderHistory = new HashSet<>();
 
     public BigInteger getId() {
         return id;
@@ -76,5 +80,24 @@ public class User {
 
     public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
+    }
+
+    public Set<Offer> getOrderHistory() {
+        return orderHistory;
+    }
+
+    public void setOrderHistory(Set<Offer> orderHistory) {
+        this.orderHistory = orderHistory;
+    }
+
+    public void removeOffer(Offer offer){
+        this.orderHistory.remove(offer);
+        offer.getClaimers().remove(this);
+    }
+
+    public void deleteAssociations(){
+        for(Offer offer: orderHistory){
+            removeOffer(offer);
+        }
     }
 }
