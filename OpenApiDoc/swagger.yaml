@@ -10,10 +10,14 @@ info:
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "localhost:8080"
 tags:
-  - name: "User"
-    description: "Actions on the Userbase"
-  - name: "Provider"
-    description: "Actions on the Provider table"
+- name: "User"
+  description: "Actions on the Userbase"
+- name: "Provider"
+  description: "Actions on the Provider table"
+- name: "Login"
+  description: "Login for all User-Groups"
+- name: "Offer"
+  description: "Actions regarding Offers"
 schemes:
   - "http"
 paths:
@@ -76,6 +80,11 @@ paths:
       tags:
         - "Provider"
       summary: "Get all Providers that match the category"
+      parameters:
+      - in: query
+        name: category
+        description: "category you want to filter for"
+        type: string
       responses:
         200:
           description: "Successfull request, category found"
@@ -85,7 +94,68 @@ paths:
               $ref: '#/definitions/Provider'
         404:
           description: "Successfull request, no category found"
-
+  /login:
+    get:
+      tags:
+      - Login
+      summary: "Validate login Information"
+      operationId: "login"
+      responses:
+        "200":
+          description: "Successfully validated login information"
+          schema: 
+            $ref: '#/definitions/Role'
+        "401":
+          description: "Unauthorized: No Account found with this Credentials"
+  /offer:
+    post:
+      tags:
+      - Offer
+      summary: "Create a new Offer"
+      operationId: "createOffer"
+      consumes:
+      - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Offer object that you are about to create"
+        required: true
+        schema:
+          $ref: '#/definitions/Offer'
+      responses:
+        201:
+          description: "Offer successfully Created"
+    get:
+      tags:
+      - Offer
+      summary: "Get all Offers"
+      responses:
+        "200":
+          description: "Successfull Request"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Offer'
+  /offer/claim/{id}:
+    post:
+      tags:
+      - Offer
+      summary: "Claim offer"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Id of the offer you want to claim"
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: "Successfully Claimed"
+          schema:
+            type: string
+        "400":
+          description: "Offer couldn't be claimed"
+          schema:
+            type: string
 definitions:
   User:
     type: object
@@ -129,9 +199,29 @@ definitions:
         type: array
         items:
           type: string
+    required: 
+    - name
+    - address
+    - phoneNumber
+    - email
+    - password
+  Offer:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      description:
+        type: string
+      amountOffered:
+        type: integer
+      amountRemaining:
+        type: integer
     required:
-      - name
-      - address
-      - phoneNumber
-      - email
-      - password
+    - title
+    - description
+    - amountOffered
+  Role:
+    type: string
+    enum: ['[user]','[admin]', '[provider]']

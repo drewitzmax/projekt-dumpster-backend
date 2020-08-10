@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProviderRepository extends CrudRepository<Provider, BigInteger> {
     public List<Provider> findAllByCategory(String category);
     public List<Provider> findAllByClassification(ProviderClassification classification);
+    public Provider findByEmail(String email);
 }

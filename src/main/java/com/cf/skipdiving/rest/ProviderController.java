@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class ProviderController {
     @Autowired
@@ -21,6 +22,9 @@ public class ProviderController {
     @PostMapping(path="/provider", consumes = "application/json")
     public ResponseEntity<String> signUp(@RequestBody Provider provider){
         provider.setId(BigInteger.ZERO);
+        if(providerRepo.findByEmail(provider.getEmail()) != null){
+            return new ResponseEntity<>("Email already in Use!", HttpStatus.CONFLICT);
+        }
         try{
             providerRepo.save(provider);
             return new ResponseEntity<>("Provider successfully created", HttpStatus.CREATED);

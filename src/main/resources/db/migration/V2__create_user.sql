@@ -1,5 +1,5 @@
 CREATE TABLE skip_diving.sd_user (
-  user_id BIGSERIAL,
+  user_id BIGSERIAL UNIQUE ,
   name CHARACTER VARYING,
   lastname CHARACTER VARYING,
   username CHARACTER VARYING UNIQUE NOT NULL,

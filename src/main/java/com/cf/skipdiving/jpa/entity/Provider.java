@@ -2,6 +2,9 @@ package com.cf.skipdiving.jpa.entity;
 
 import com.cf.skipdiving.enums.ProviderClassification;
 import com.cf.skipdiving.exception.ActionNotExecutedException;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -13,6 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name="provider", schema = "skip_diving")
 public class Provider {
+    private static BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="provider_id", nullable = false, unique = true, updatable = false)
@@ -23,7 +27,7 @@ public class Provider {
     private String address;
     @Column(name="phone_number")
     private String phoneNumber;
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
     @Column(name="password")
     private String password;
@@ -37,6 +41,9 @@ public class Provider {
     @CollectionTable(name="provider_image",schema = "skip_diving", joinColumns=@JoinColumn(name="provider_id"))
     @Column(name="photo_url", nullable = false)
     private Set<String> photos = new HashSet<>();
+
+    @OneToMany(mappedBy = "provider")
+    private List<Offer> offers = new ArrayList<>();
 
     public BigInteger getId() {
         return id;
@@ -83,7 +90,7 @@ public class Provider {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PASSWORD_ENCODER.encode(password);
     }
 
     public String getHomepageUrl() {
