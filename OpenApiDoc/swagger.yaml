@@ -20,6 +20,8 @@ tags:
   description: "Actions regarding Offers"
 schemes:
   - "http"
+
+#Endpoints
 paths:
   /user:
     post:
@@ -102,6 +104,25 @@ paths:
               $ref: '#/definitions/Provider'
         404:
           description: "Successfull request, no category found"
+  /provider/classification:
+    get:
+      tags:
+        - "Provider"
+      summary: "Get all Providers that match the classification"
+      parameters:
+      - in: query
+        name: classification
+        description: "classification stated in the classification object"
+        type: string
+      responses:
+          200:
+            description: "Successfull request, matched classification"
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Provider'
+          404:
+            description: "Bad request"
   /login:
     get:
       tags:
@@ -164,6 +185,8 @@ paths:
           description: "Offer couldn't be claimed"
           schema:
             type: string
+
+#Objects
 definitions:
   User:
     type: object
@@ -203,6 +226,8 @@ definitions:
         type: string
       category:
         type: string
+      classification:
+        type: string
       photos:
         type: array
         items:
@@ -230,6 +255,11 @@ definitions:
     - title
     - description
     - amountOffered
+
+  #Enums
+  Classification:
+    type: string
+    enum: ["RESTAURANT", "SUPERMARKET"]
   Role:
     type: string
     enum: ['[user]','[admin]', '[provider]']

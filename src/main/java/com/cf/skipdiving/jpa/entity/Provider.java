@@ -1,5 +1,6 @@
 package com.cf.skipdiving.jpa.entity;
 
+import com.cf.skipdiving.enums.ProviderClassification;
 import com.cf.skipdiving.exception.ActionNotExecutedException;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -26,7 +27,7 @@ public class Provider {
     private String address;
     @Column(name="phone_number")
     private String phoneNumber;
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
     @Column(name="password")
     private String password;
@@ -34,6 +35,8 @@ public class Provider {
     private String homepageUrl;
     @Column(name = "category")
     private String category;
+    @Enumerated(EnumType.STRING)
+    private ProviderClassification classification;
     @ElementCollection
     @CollectionTable(name="provider_image",schema = "skip_diving", joinColumns=@JoinColumn(name="provider_id"))
     @Column(name="photo_url", nullable = false)
@@ -120,6 +123,14 @@ public class Provider {
 
     public void setOffers(List<Offer> offers) {
         this.offers = offers;
+    }
+    
+    public ProviderClassification getClassification() {
+        return classification;
+    }
+
+    public void setClassification(ProviderClassification classification) {
+        this.classification = classification;
     }
 
     public void addPhotoUrl(String url){
