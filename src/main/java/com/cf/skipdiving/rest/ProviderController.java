@@ -1,5 +1,6 @@
 package com.cf.skipdiving.rest;
 
+import com.cf.skipdiving.enums.ProviderClassification;
 import com.cf.skipdiving.jpa.crud.ProviderRepository;
 import com.cf.skipdiving.jpa.entity.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,18 @@ public class ProviderController {
         }
     }
 
+    //Classification Mapping
+    @GetMapping(path = "provider/classification")
+    public ResponseEntity<List<Provider>>getClassification(@RequestParam ProviderClassification classification){
+        List<Provider> providers = providerRepo.findAllByClassification(classification);
+        if (providers.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(providers, HttpStatus.OK);
+        }
+    }
+
+    //
     private List<Provider> convertIterableToList(Iterable<Provider> iterable) {
         List<Provider> list = new ArrayList<>();
         for (Provider provider : iterable) {

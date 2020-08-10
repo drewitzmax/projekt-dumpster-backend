@@ -32,7 +32,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
-                .authorizeRequests().antMatchers(HttpMethod.GET).authenticated()
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.GET).authenticated()
                     .antMatchers(HttpMethod.POST, "/offer").hasAuthority("provider")
                     .antMatchers(HttpMethod.POST, "/offer/claim/{id}").hasAuthority("user")
                 .and()
@@ -45,10 +46,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.POST, "/user")
+        web.ignoring()
+                .antMatchers(HttpMethod.POST, "/user")
                 .antMatchers(HttpMethod.POST, "/provider")
                 .antMatchers(HttpMethod.GET, "/provider")
                 .antMatchers(HttpMethod.GET, "/provider/category")
+                .antMatchers(HttpMethod.GET, "/provider/classification")
                 .antMatchers(HttpMethod.GET, "/offer");
     }
 
