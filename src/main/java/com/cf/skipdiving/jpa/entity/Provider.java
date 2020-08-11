@@ -43,7 +43,7 @@ public class Provider {
     private Set<String> photos = new HashSet<>();
 
     @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
-    private List<Offer> offers = new ArrayList<>();
+    private Set<Offer> offers = new HashSet<>();
 
     public BigInteger getId() {
         return id;
@@ -117,11 +117,11 @@ public class Provider {
         this.category = category;
     }
 
-    public List<Offer> getOffers() {
+    public Set<Offer> getOffers() {
         return offers;
     }
 
-    public void setOffers(List<Offer> offers) {
+    public void setOffers(Set<Offer> offers) {
         this.offers = offers;
     }
     
