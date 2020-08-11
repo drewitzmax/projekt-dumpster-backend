@@ -85,6 +85,16 @@ paths:
               $ref: '#/definitions/Provider'
         "404":
           description: "Successfull request, no providers found"
+    delete:
+      tags:
+        - "Provider"
+      summary: "Delete issuing Account"
+      operationId: "deleteProviderAccount"
+      responses:
+        200:
+          description: "account successfully deleted"
+        400:
+          description: "account couldn't be deleted"
   /provider/category:
     get:
       tags:
