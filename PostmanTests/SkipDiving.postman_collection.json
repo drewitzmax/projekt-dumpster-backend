@@ -325,6 +325,40 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Offer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Restaurantnr1@Test.at",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/offer/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer",
+						"1"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
