@@ -2,6 +2,7 @@ package com.cf.skipdiving.jpa.entity;
 
 import com.cf.skipdiving.enums.ProviderClassification;
 import com.cf.skipdiving.exception.ActionNotExecutedException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,6 +44,7 @@ public class Provider {
     private Set<String> photos = new HashSet<>();
 
     @OneToMany(mappedBy = "provider", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("provider")
     private Set<Offer> offers = new HashSet<>();
 
     public BigInteger getId() {
