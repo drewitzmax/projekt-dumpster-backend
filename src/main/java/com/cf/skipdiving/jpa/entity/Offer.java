@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name="offer", schema = "skip_diving")
 public class Offer {
@@ -28,7 +31,7 @@ public class Offer {
     @ManyToMany
     @JoinTable(name="offer_user", schema = "skip_diving", joinColumns = @JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
     @JsonIgnoreProperties("orderHistory")
-    private List<User> claimers = new ArrayList<>();
+    private Set<User> claimers = new HashSet<>();
 
     public BigInteger getId() {
         return id;
@@ -78,11 +81,11 @@ public class Offer {
         this.provider = provider;
     }
 
-    public List<User> getClaimers() {
+    public Set<User> getClaimers() {
         return claimers;
     }
 
-    public void setClaimers(List<User> claimers) {
+    public void setClaimers(Set<User> claimers) {
         this.claimers = claimers;
     }
 

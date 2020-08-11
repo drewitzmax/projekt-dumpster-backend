@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c20bd44e-7abc-4cbc-b064-5073e572206f",
+		"_postman_id": "00da5180-28d1-4a66-869f-2c3fe699c4b1",
 		"name": "SkipDiving",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9b1ff631-fe41-4424-8bca-5da9bd3f6ea1",
+						"id": "ec7ba89e-4e9a-438e-bba4-c8da2c8f1933",
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
@@ -52,7 +52,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "34747fd5-a55a-4da3-b320-474bb1e7a2a1",
+						"id": "8d12d6e3-c83d-4723-91a9-c36b3fb08944",
 						"exec": [
 							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.response.to.have.status(201);\r",
@@ -67,7 +67,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Restaurant Nr1\",\r\n    \"address\":\"TestingStreet 12\\n1030 Wien\",\r\n    \"phoneNumber\":\"0151-06845756\",\r\n    \"email\":\"Restaurantnr1@Test.at\",\r\n    \"password\":\"test\",\r\n    \"homepageUrl\":\"www.nr1.at\",\r\n    \"photos\":[\r\n        \"url1\",\r\n        \"url2\",\r\n        \"url3\"\r\n    ]\r\n}",
+					"raw": "{\r\n    \"name\":\"Restaurant Nr1\",\r\n    \"address\":\"TestingStreet 12\\n1030 Wien\",\r\n    \"phoneNumber\":\"0151-06845756\",\r\n    \"email\":\"Restaurantnr1@Test.at\",\r\n    \"password\":\"test\",\r\n    \"homepageUrl\":\"www.nr1.at\",\r\n    \"category\":\"italian\",\r\n    \"photos\":[\r\n        \"url1\",\r\n        \"url2\",\r\n        \"url3\"\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -88,12 +88,125 @@
 			"response": []
 		},
 		{
+			"name": "Offer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Restaurantnr1@Test.at",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Title\",\r\n    \"description\":\"description\",\r\n    \"amountOffered\":5,\r\n    \"amountRemaining\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/offer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Claim Offer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/offer/claim/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer",
+						"claim",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Provider",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Restaurantnr1@Test.at",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "All Providers",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "006aa244-2342-47a5-95e2-fa1d9f715170",
+						"id": "6dfd9053-6a29-4945-8599-52113b1634eb",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -118,6 +231,137 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "All Offers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/offer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Provider by Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/provider/category?category=italian",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"provider",
+						"category"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "italian"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Provider",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "test",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "Restaurantnr1@Test.at",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/provider",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"provider"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "test",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "testingtester",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "86086bc9-43ed-4526-ad82-89582d83e45b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "103d3111-bf23-43d7-8ab9-3275aa075b2a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
