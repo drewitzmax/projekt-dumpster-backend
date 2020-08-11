@@ -6,6 +6,7 @@ import com.cf.skipdiving.jpa.entity.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -65,6 +66,19 @@ public class ProviderController {
         }
     }
 
+    @DeleteMapping(path="/provider")
+    public ResponseEntity<String>deleteProviderAccount(){
+        try{
+            Provider current = getCurrentProvider();
+            current.deleteAssociations();
+            providerRepo.delete(current);
+            return new ResponseEntity<>("Account successfully deleted", HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Account couldn't be deleted", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     //
     private List<Provider> convertIterableToList(Iterable<Provider> iterable) {
         List<Provider> list = new ArrayList<>();
@@ -72,5 +86,9 @@ public class ProviderController {
             list.add(provider);
         }
         return list;
+    }
+
+    private Provider getCurrentProvider(){
+        return providerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
