@@ -175,6 +175,21 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Offer'
+  /offer/{id}:
+    delete:
+      tags:
+        - Offer
+      summary: "Delete Offer"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        200:
+          description: "Offer successfully deleted"
+        401:
+          description: "You are not the owner of this offer"
   /offer/claim/{id}:
     post:
       tags:

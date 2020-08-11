@@ -64,4 +64,28 @@ public class OfferController {
             return new ResponseEntity<>("Couldn't claim offer", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping(path="/offer/{id}")
+    public ResponseEntity<String> deleteOfferById(@PathVariable BigInteger id){
+        Offer offer = offerRepo.findById(id).get();
+        if(isOwner(getCurrentProvider(),offer)){
+            offer.deleteAssociations();
+            offerRepo.delete(offer);
+            return new ResponseEntity<>("Offer successfully deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("You are not the owner of this offer", HttpStatus.UNAUTHORIZED);
+    }
+
+    private Provider getCurrentProvider(){
+        return providerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    private boolean isOwner(Provider provider, Offer offer){
+        try{
+            return provider.getId() == offer.getProvider().getId();
+        } catch (Exception e){
+            return false;
+        }
+    }
+
 }

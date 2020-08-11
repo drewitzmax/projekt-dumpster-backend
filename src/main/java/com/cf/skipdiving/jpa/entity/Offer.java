@@ -27,6 +27,7 @@ public class Offer {
 
     @ManyToOne()
     @JoinTable(name="provider_offer", schema = "skip_diving",joinColumns=@JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="provider_id") )
+    @JsonIgnoreProperties("offers")
     private Provider provider;
     @ManyToMany
     @JoinTable(name="offer_user", schema = "skip_diving", joinColumns = @JoinColumn(name="offer_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
