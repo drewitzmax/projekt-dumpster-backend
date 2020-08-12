@@ -75,7 +75,9 @@ public class OfferController {
         User claimer = userRepo.findByUsername(auth.getName());
 
         Offer offer = offerRepo.findById(id).get();
-
+        if(offer.getClaimers().contains(claimer)){
+            return new ResponseEntity<>("You can't claim twice", HttpStatus.BAD_REQUEST);
+        }
         if(offer.isAvailable()){
             offer.claim( claimer );
             offerRepo.save( offer );
