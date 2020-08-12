@@ -49,6 +49,16 @@ public class OfferController {
         return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
+    @GetMapping(path="/offer/orderlist")
+    public ResponseEntity<List<Offer>> getOwnOrders(){
+        List<Offer> orders = offerRepo.findByClaimersContains(getCurrentUser());
+        if(orders.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(orders, HttpStatus.OK);
+        }
+    }
+
     @PostMapping(path="/offer/claim/{id}")
     public ResponseEntity<String> claimOffer(@PathVariable BigInteger id){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -78,6 +88,10 @@ public class OfferController {
 
     private Provider getCurrentProvider(){
         return providerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    private User getCurrentUser(){
+        return userRepo.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     private boolean isOwner(Provider provider, Offer offer){

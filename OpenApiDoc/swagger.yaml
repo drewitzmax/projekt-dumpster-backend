@@ -190,6 +190,20 @@ paths:
           description: "Offer successfully deleted"
         401:
           description: "You are not the owner of this offer"
+  /offer/offerlist:
+    get:
+      tags:
+        - Offer
+      summary: "Get all of my Orders"
+      responses:
+        200:
+          description: "Got some Orders"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Offer'
+        204:
+          description: "No orders found for your account"
   /offer/claim/{id}:
     post:
       tags:
