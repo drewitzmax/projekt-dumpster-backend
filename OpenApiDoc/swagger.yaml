@@ -204,6 +204,20 @@ paths:
               $ref: '#/definitions/Offer'
         204:
           description: "No orders found for your account"
+  /offer/orderlist:
+    get:
+      tags:
+        - Offer
+      summary: "Get all of my Companies offers"
+      responses:
+        200:
+          description: "Got some Offers"
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Offer'
+        204:
+          description: "No offers found for your account"
   /offer/claim/{id}:
     post:
       tags:

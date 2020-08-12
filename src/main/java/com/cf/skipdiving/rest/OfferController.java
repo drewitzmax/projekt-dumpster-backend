@@ -59,6 +59,16 @@ public class OfferController {
         }
     }
 
+    @GetMapping(path="/offer/offerlist")
+    public ResponseEntity<List<Offer>> getOwnOffers(){
+        List<Offer> orders = offerRepo.findByProvider(getCurrentProvider());
+        if(orders.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(orders, HttpStatus.OK);
+        }
+    }
+
     @PostMapping(path="/offer/claim/{id}")
     public ResponseEntity<String> claimOffer(@PathVariable BigInteger id){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
