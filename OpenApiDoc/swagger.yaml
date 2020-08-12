@@ -238,7 +238,22 @@ paths:
           description: "Offer couldn't be claimed"
           schema:
             type: string
-
+  /offer/cancle/{id}:
+    patch:
+      tags:
+      - Offer
+      summary: "Cancle offer specified by id"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id of the offer you want to cancle"
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: "Order successfully cancled"
+        "400":
+          description: "You haven't oredered this"
 #Objects
 definitions:
   User:

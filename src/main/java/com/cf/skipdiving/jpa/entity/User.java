@@ -93,6 +93,7 @@ public class User {
     public void removeOffer(Offer offer){
         this.orderHistory.remove(offer);
         offer.getClaimers().remove(this);
+        offer.setAmountRemaining(offer.getAmountRemaining()+1);
     }
 
     public void deleteAssociations(){

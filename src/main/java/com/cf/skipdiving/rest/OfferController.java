@@ -98,6 +98,24 @@ public class OfferController {
         return new ResponseEntity<>("You are not the owner of this offer", HttpStatus.UNAUTHORIZED);
     }
 
+    @PatchMapping(path="/offer/cancle/{id}")
+    public ResponseEntity<String> cancleOrder(@PathVariable BigInteger id){
+        Offer offer = offerRepo.findById(id).get();
+        User claimer = getCurrentUser();
+
+        if(offer.getClaimers().contains(claimer)){
+            try{
+                claimer.removeOffer(offer);
+                userRepo.save(claimer);
+                return new ResponseEntity<>("Order is cancled successfully", HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>("Couldn't Remove order pls contact us", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity<>("You are not on the List of orderers", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     private Provider getCurrentProvider(){
         return providerRepo.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
     }
