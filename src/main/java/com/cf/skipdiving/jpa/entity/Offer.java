@@ -19,7 +19,7 @@ public class Offer {
     @Column(name="title")
     private String title;
     @Column(name="description")
-    private String describtion;
+    private String description;
     @Column(name="amount_offered", updatable = false)
     private int amountOffered;
     @Column(name="amount_remaining")
