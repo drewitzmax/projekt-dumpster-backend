@@ -36,6 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET).authenticated()
                     .antMatchers(HttpMethod.POST, "/offer").hasAuthority("provider")
                     .antMatchers(HttpMethod.POST, "/offer/claim/{id}").hasAuthority("user")
+                    .antMatchers(HttpMethod.PATCH,"/offer/cancel/{id}").hasAuthority("user")
                 .and()
                     .httpBasic()
                 .and()
