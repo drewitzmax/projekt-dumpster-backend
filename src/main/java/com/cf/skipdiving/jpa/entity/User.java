@@ -101,4 +101,14 @@ public class User {
             removeOffer(offer);
         }
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof User && this.id == ((User) obj).id;
+    }
 }
