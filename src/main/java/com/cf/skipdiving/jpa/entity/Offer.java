@@ -51,11 +51,11 @@ public class Offer {
     }
 
     public String getDescribtion() {
-        return describtion;
+        return description;
     }
 
     public void setDescribtion(String describtion) {
-        this.describtion = describtion;
+        this.description = describtion;
     }
 
     public int getAmountOffered() {
