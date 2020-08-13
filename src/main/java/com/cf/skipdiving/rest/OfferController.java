@@ -98,7 +98,7 @@ public class OfferController {
         return new ResponseEntity<>("You are not the owner of this offer", HttpStatus.UNAUTHORIZED);
     }
 
-    @PatchMapping(path="/offer/cancle/{id}")
+    @PatchMapping(path="/offer/cancel/{id}")
     public ResponseEntity<String> cancleOrder(@PathVariable BigInteger id){
         Offer offer = offerRepo.findById(id).get();
         User claimer = getCurrentUser();

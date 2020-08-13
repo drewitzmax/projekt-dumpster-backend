@@ -238,7 +238,7 @@ paths:
           description: "Offer couldn't be claimed"
           schema:
             type: string
-  /offer/cancle/{id}:
+  /offer/cancel/{id}:
     patch:
       tags:
       - Offer
