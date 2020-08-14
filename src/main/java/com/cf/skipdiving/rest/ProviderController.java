@@ -38,7 +38,7 @@ public class ProviderController {
     public ResponseEntity<List<Provider>>getAllProviders(){
         List<Provider> providers = convertIterableToList( providerRepo.findAll() );
         if(providers.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(providers, HttpStatus.OK);
         }
@@ -49,7 +49,7 @@ public class ProviderController {
     public ResponseEntity<List<Provider>>getAllCategory(@RequestParam String category){
         List<Provider> providers = providerRepo.findAllByCategory(category);
         if(providers.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(providers, HttpStatus.OK);
         }
@@ -60,7 +60,7 @@ public class ProviderController {
     public ResponseEntity<List<Provider>>getClassification(@RequestParam ProviderClassification classification){
         List<Provider> providers = providerRepo.findAllByClassification(classification);
         if (providers.isEmpty()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(providers, HttpStatus.OK);
         }
